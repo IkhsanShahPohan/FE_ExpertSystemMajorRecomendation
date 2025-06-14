@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  useState,
-  useEffect,
-  ReactNode,
-  HTMLAttributes,
-  ButtonHTMLAttributes,
-} from "react";
+import React, { useState, useEffect } from "react";
 import {
   ChevronRight,
   GraduationCap,
@@ -27,6 +21,15 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { RiasecModal } from "@/components/RiasecModal";
+import { Badge } from "./components/Badge";
+import { Alert } from "./components/Alert";
+import { Button } from "./components/Button";
+import { Card } from "./components/Card";
+import { CardHeader } from "./components/CardHeader";
+import { CardTitle } from "./components/CardTitle";
+import { CardDescription } from "./components/CardProps";
+import { CardContent } from "./components/CardContent";
+import { Progress } from "./components/Progress";
 
 interface Question {
   id: number;
@@ -66,166 +69,6 @@ interface RecommendationResponse {
   }>;
 }
 
-// Alert Component
-const Alert = ({
-  children,
-  variant = "default",
-  className = "",
-}: {
-  children: ReactNode;
-  variant?: "default" | "destructive" | "success";
-  className?: string;
-}) => {
-  const variants = {
-    default: "bg-slate-50/10 border-slate-200/20 text-slate-100",
-    destructive: "bg-red-50/10 border-red-200/20 text-red-100",
-    success: "bg-green-50/10 border-green-200/20 text-green-100",
-  };
-
-  return (
-    <div
-      className={`relative w-full rounded-lg border p-4 backdrop-blur-sm ${variants[variant]} ${className}`}
-    >
-      {children}
-    </div>
-  );
-};
-
-// Card Components
-type CardProps = {
-  children: ReactNode;
-  className?: string;
-} & HTMLAttributes<HTMLDivElement>;
-
-const Card = ({ children, className = "", ...props }: CardProps) => (
-  <div
-    className={`rounded-xl border border-slate-200/20 bg-white/5 backdrop-blur-sm shadow-lg ${className}`}
-    {...props}
-  >
-    {children}
-  </div>
-);
-
-const CardHeader = ({ children, className = "" }: CardProps) => (
-  <div className={`flex flex-col space-y-1.5 p-6 ${className}`}>{children}</div>
-);
-
-const CardTitle = ({ children, className = "" }: CardProps) => (
-  <h3
-    className={`text-2xl font-semibold leading-none tracking-tight text-white ${className}`}
-  >
-    {children}
-  </h3>
-);
-
-const CardDescription = ({ children, className = "" }: CardProps) => (
-  <p className={`text-sm text-slate-300 ${className}`}>{children}</p>
-);
-
-const CardContent = ({ children, className = "" }: CardProps) => (
-  <div className={`p-6 pt-0 ${className}`}>{children}</div>
-);
-
-// Button Component
-type VariantType = "default" | "primary" | "secondary" | "outline" | "ghost";
-type SizeType = "default" | "sm" | "lg" | "xl";
-
-type ButtonProps = {
-  children: ReactNode;
-  variant?: VariantType;
-  size?: SizeType;
-  className?: string;
-  disabled?: boolean;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
-
-const Button = ({
-  children,
-  variant = "default",
-  size = "default",
-  className = "",
-  disabled = false,
-  ...props
-}: ButtonProps) => {
-  const variants = {
-    default:
-      "bg-slate-900/50 text-slate-100 hover:bg-slate-800/50 border-slate-700/50",
-    primary:
-      "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-transparent",
-    secondary:
-      "bg-slate-100/10 text-slate-100 hover:bg-slate-100/20 border-slate-700/50",
-    outline:
-      "border-slate-700/50 bg-transparent hover:bg-slate-100/10 text-slate-100",
-    ghost: "hover:bg-slate-100/10 text-slate-100",
-  };
-
-  const sizes = {
-    default: "h-10 px-4 py-2",
-    sm: "h-9 px-3",
-    lg: "h-11 px-8",
-    xl: "h-14 px-10 text-lg",
-  };
-
-  return (
-    <button
-      className={`inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border cursor-pointer ${
-        variants[variant]
-      } ${sizes[size]} ${className} ${
-        disabled ? "opacity-50 cursor-not-allowed" : ""
-      }`}
-      disabled={disabled}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
-
-// Progress Component
-const Progress = ({
-  value,
-  className = "",
-}: {
-  value: number;
-  className?: string;
-}) => (
-  <div
-    className={`relative h-4 w-full overflow-hidden rounded-full bg-slate-900/20 ${className}`}
-  >
-    <div
-      className="h-full w-full flex-1 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-700 ease-in-out"
-      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-    />
-  </div>
-);
-
-// Badge Component
-const Badge = ({
-  children,
-  variant = "default",
-  className = "",
-}: {
-  children: ReactNode;
-  variant?: "default" | "secondary" | "success" | "warning";
-  className?: string;
-}) => {
-  const variants = {
-    default:
-      "bg-slate-900/50 hover:bg-slate-900/80 border-slate-700/50 text-slate-100",
-    secondary:
-      "bg-slate-100/10 hover:bg-slate-100/20 border-slate-700/50 text-slate-100",
-    success: "bg-green-500/20 border-green-500/30 text-green-100",
-    warning: "bg-yellow-500/20 border-yellow-500/30 text-yellow-100",
-  };
-
-  return (
-    <div
-      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors ${variants[variant]} ${className}`}
-    >
-      {children}
-    </div>
-  );
-};
-
 const ExpertSystem = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -241,13 +84,12 @@ const ExpertSystem = () => {
   const [error, setError] = useState<string | null>(null);
   const [apiConnected, setApiConnected] = useState(false);
 
-  // API Base URL - adjust this to match your Flask server
   const API_BASE_URL = "http://localhost:5000/api";
 
   // Check API connection
   const checkApiConnection = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/health`, {
+      const response = await fetch(`${API_BASE_URL}/majors`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -325,43 +167,6 @@ const ExpertSystem = () => {
       }
     } catch (err) {
       console.error("Error getting recommendations:", err);
-      setError("Failed to get recommendations. Using fallback data.");
-
-      // Fallback recommendations if API fails
-      const mockData: RecommendationResponse = {
-        success: true,
-        answered_questions: 30,
-        dominant_type: "R",
-        assessment_summary: {
-          R: { name: "Realistic", score: 100.0 },
-          I: { name: "Investigative", score: 84.0 },
-          A: { name: "Artistic", score: 72.0 },
-        },
-        riasec_scores: { R: 5.0, I: 4.2, A: 3.6 },
-        riasec_percentages: { R: 100.0, I: 84.0, A: 72.0 },
-        recommendations: [
-          {
-            major_code: "FT1",
-            major_name: "Teknik Mesin",
-            faculty: "Fakultas Teknik",
-            description: "Merancang dan mengembangkan sistem mekanik",
-            riasec_pattern: "RI",
-            compatibility_score: 9.2,
-            compatibility_percentage: 92.0,
-          },
-          {
-            major_code: "FT2",
-            major_name: "Teknik Kimia",
-            faculty: "Fakultas Teknik",
-            description: "Mengembangkan proses kimia industri",
-            riasec_pattern: "IR",
-            compatibility_score: 9.2,
-            compatibility_percentage: 92.0,
-          },
-        ],
-      };
-      setRecommendationData(mockData);
-      setShowResults(true);
     } finally {
       setLoading(false);
     }
@@ -467,9 +272,10 @@ const ExpertSystem = () => {
                 onClose={() => setIsModalOpen(false)}
               />
             </div>
-            <p className="text-xl text-slate-300">
-              Profil kepribadian dan rekomendasi jurusan berdasarkan{" "}
-              {recommendationData.answered_questions} pertanyaan
+            <p className="text-xl text-slate-300 italic">
+              Perlu diingat, hasil ini bersifat sebagai rekomendasi awal dan
+              belum tentu sepenuhnya akurat. Keputusan akhir tetap bergantung
+              pada pertimbangan pribadi, minat, dan analisis lebih lanjut.
             </p>
           </div>
 
@@ -628,8 +434,8 @@ const ExpertSystem = () => {
             {recommendationData.recommendations.length > 3 && (
               <div className="text-center mt-6">
                 <p className="text-slate-300">
-                  Menampilkan 6 dari {recommendationData.recommendations.length}{" "}
-                  rekomendasi teratas
+                  Menampilkan 10 dari{" "}
+                  {recommendationData.recommendations.length}{" "}
                 </p>
               </div>
             )}
@@ -697,9 +503,7 @@ const ExpertSystem = () => {
                   } animate-pulse`}
                 ></div>
                 <span className="text-sm text-slate-300">
-                  {apiConnected
-                    ? "Terhubung ke Backend"
-                    : "Menggunakan data demo"}
+                  {apiConnected ? "Connected" : "Not Connected"}
                 </span>
               </div>
 
