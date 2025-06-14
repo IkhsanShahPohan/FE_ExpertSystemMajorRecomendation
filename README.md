@@ -6,8 +6,9 @@ Ini adalah proyek aplikasi frontend berbasis [Next.js](https://nextjs.org/). Pro
 
 Ikuti langkah-langkah berikut untuk menjalankan aplikasi secara lokal:
 
+### 1. Clone Repository
+
 ```bash
-# 1. Clone repository
 git clone https://github.com/IkhsanShahPohan/frontend_kb.git
 
 # 2. Masuk ke direktori proyek
