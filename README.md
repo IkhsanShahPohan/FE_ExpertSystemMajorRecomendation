@@ -39,7 +39,7 @@ git clone https://github.com/IkhsanShahPohan/frontend_kb.git
 Setelah proses clone selesai, masuk ke folder proyek:
 
 ```bash
-cd frontend_kb
+cd nama-folder-anda
 ```
 
 ---
